@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 # IDE data
 .texpadtmp/
-
+rapport/.texpadtmp/
 # C extensions
 *.so
 
