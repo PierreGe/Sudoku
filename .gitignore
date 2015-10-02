@@ -4,6 +4,8 @@ __pycache__/
 # IDE data
 .texpadtmp/
 rapport/.texpadtmp/
+.idea/
+
 # C extensions
 *.so
 
