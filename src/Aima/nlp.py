@@ -1,11 +1,14 @@
 """A chart parser and some grammars. (Chapter 22)"""
 
+# (Written for the second edition of AIMA; expect some discrepanciecs
+# from the third edition until this gets reviewed.)
+
 from utils import *
 
 #______________________________________________________________________________
 # Grammars and Lexicons
 
-def Rules(**rules): 
+def Rules(**rules):
     """Create a dictionary mapping symbols to alternative sequences.
     >>> Rules(A = "B C | D E")
     {'A': [['B', 'C'], ['D', 'E']]}
@@ -18,7 +21,7 @@ def Lexicon(**rules):
     """Create a dictionary mapping symbols to alternative words.
     >>> Lexicon(Art = "the | a | an")
     {'Art': ['the', 'a', 'an']}
-    """    
+    """
     for (lhs, rhs) in rules.items():
         rules[lhs] = [word.strip() for word in rhs.split('|')]
     return rules
@@ -42,11 +45,11 @@ class Grammar:
 
     def __repr__(self):
         return '<Grammar %s>' % self.name
-    
+
 E0 = Grammar('E0',
     Rules( # Grammar for E_0 [Fig. 22.4]
     S = 'NP VP | S Conjunction S',
-    NP = 'Pronoun | Noun | Article Noun | Digit Digit | NP PP | NP RelClause',
+    NP = 'Pronoun | Name | Noun | Article Noun | Digit Digit | NP PP | NP RelClause',
     VP = 'Verb | VP NP | VP Adjective | VP PP | VP Adverb',
     PP = 'Preposition NP',
     RelClause = 'That VP'),
@@ -78,11 +81,16 @@ E_ = Grammar('E_', # Trivial Grammar and lexicon for testing
     V = 'saw | liked | feel'
     ))
 
+E_NP_ = Grammar('E_NP_', # another trivial grammar for testing
+              Rules(NP = 'Adj NP | N'),
+              Lexicon(Adj = 'happy | handsome | hairy',
+                      N = 'man'))
+
 def generate_random(grammar=E_, s='S'):
     """Replace each token in s by a random entry in grammar (recursively).
     This is useful for testing a grammar, e.g. generate_random(E_)"""
     import random
-    
+
     def rewrite(tokens, into):
         for token in tokens:
             if token in grammar.rules:
@@ -101,7 +109,7 @@ def generate_random(grammar=E_, s='S'):
 
 class Chart:
     """Class for parsing sentences using a chart data structure. [Fig 22.7]
-    >>> chart = Chart(E0); 
+    >>> chart = Chart(E0);
     >>> len(chart.parses('the stench is in 2 2'))
     1
     """
@@ -113,14 +121,20 @@ class Chart:
         update(self, grammar=grammar, trace=trace)
 
     def parses(self, words, S='S'):
-        """Return a list of parses; words can be a list or string."""
+        """Return a list of parses; words can be a list or string.
+        >>> chart = Chart(E_NP_)
+        >>> chart.parses('happy man', 'NP')
+        [[0, 2, 'NP', [('Adj', 'happy'), [1, 2, 'NP', [('N', 'man')], []]], []]]
+        """
         if isinstance(words, str):
             words = words.split()
         self.parse(words, S)
         # Return all the parses that span the whole input
+        # 'span the whole input' => begin at 0, end at len(words)
         return [[i, j, S, found, []]
                 for (i, j, lhs, found, expects) in self.chart[len(words)]
-                if lhs == S and expects == []]
+                # assert j == len(words)
+                if i == 0 and lhs == S and expects == []]
 
     def parse(self, words, S='S'):
         """Parse a list of words; according to the grammar.
@@ -164,7 +178,32 @@ class Chart:
                 self.add_edge([i, k, A, alpha + [edge], B1b[1:]])
 
 
-            
-#### TODO: 
+
+#### TODO:
 #### 1. Parsing with augmentations -- requires unification, etc.
 #### 2. Sequitor
+
+__doc__ += """
+>>> chart = Chart(E0)
+
+>>> chart.parses('the wumpus that is smelly is near 2 2')
+[[0, 9, 'S', [[0, 5, 'NP', [[0, 2, 'NP', [('Article', 'the'), ('Noun', 'wumpus')], []], [2, 5, 'RelClause', [('That', 'that'), [3, 5, 'VP', [[3, 4, 'VP', [('Verb', 'is')], []], ('Adjective', 'smelly')], []]], []]], []], [5, 9, 'VP', [[5, 6, 'VP', [('Verb', 'is')], []], [6, 9, 'PP', [('Preposition', 'near'), [7, 9, 'NP', [('Digit', '2'), ('Digit', '2')], []]], []]], []]], []]]
+
+### There is a built-in trace facility (compare [Fig. 22.9])
+>>> Chart(E_, trace=True).parses('I feel it')
+     parse: added [0, 0, 'S_', [], ['S']]
+ predictor: added [0, 0, 'S', [], ['NP', 'VP']]
+ predictor: added [0, 0, 'NP', [], ['Art', 'N']]
+ predictor: added [0, 0, 'NP', [], ['Pronoun']]
+   scanner: added [0, 1, 'NP', [('Pronoun', 'I')], []]
+  extender: added [0, 1, 'S', [[0, 1, 'NP', [('Pronoun', 'I')], []]], ['VP']]
+ predictor: added [1, 1, 'VP', [], ['V', 'NP']]
+   scanner: added [1, 2, 'VP', [('V', 'feel')], ['NP']]
+ predictor: added [2, 2, 'NP', [], ['Art', 'N']]
+ predictor: added [2, 2, 'NP', [], ['Pronoun']]
+   scanner: added [2, 3, 'NP', [('Pronoun', 'it')], []]
+  extender: added [1, 3, 'VP', [('V', 'feel'), [2, 3, 'NP', [('Pronoun', 'it')], []]], []]
+  extender: added [0, 3, 'S', [[0, 1, 'NP', [('Pronoun', 'I')], []], [1, 3, 'VP', [('V', 'feel'), [2, 3, 'NP', [('Pronoun', 'it')], []]], []]], []]
+  extender: added [0, 3, 'S_', [[0, 3, 'S', [[0, 1, 'NP', [('Pronoun', 'I')], []], [1, 3, 'VP', [('V', 'feel'), [2, 3, 'NP', [('Pronoun', 'it')], []]], []]], []]], []]
+[[0, 3, 'S', [[0, 1, 'NP', [('Pronoun', 'I')], []], [1, 3, 'VP', [('V', 'feel'), [2, 3, 'NP', [('Pronoun', 'it')], []]], []]], []]]
+"""

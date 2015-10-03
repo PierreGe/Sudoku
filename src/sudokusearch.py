@@ -1,4 +1,7 @@
 from Aima import search
+from Aima import csp
+
+a = csp.Sudoku()
 
 
 class SudokuGrid():
