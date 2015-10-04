@@ -10,7 +10,6 @@ class SudokuProblem(search.Problem):
 
     def actions(self, A):
         "The actions at a graph node are just its neighbors."
-        print("lo")
         grid, pos = A
         liste = []
         for possibility in grid.possibleValue(pos):
