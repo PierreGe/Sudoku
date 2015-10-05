@@ -75,6 +75,26 @@ class SudokuHeuristicProblem(SudokuAbstractProblem):
         return c
 
 
+class SudokuHillClimbingProblem(SudokuAbstractProblem):
+    def __init__(self, grid):
+        grid.randomFill()
+        SudokuAbstractProblem.__init__(self, grid, grid)
+
+    def actions(self, A):
+        "The actions at a graph node are just its neighbors."
+        grid = A
+        l = []
+        for sq in range(1,10):
+            g = copy.deepcopy(grid)
+            g.switchConflict(sq)
+            l.append(g)
+        return l
+
+    def value(self, state):
+        """For optimization problems, each state has a value.  Hill-climbing
+        and related algorithms try to maximize this value."""
+        return 81 - state.getConflictNumber()
+
 if __name__ == '__main__':
     # g = SudokuGrid('..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..')
     # g = SudokuGrid('483921657967345821251876493548132976729564138136798245372689514814253769695417382')
