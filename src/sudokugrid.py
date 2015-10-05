@@ -42,6 +42,7 @@ class SudokuGrid():
         return l if len(l)>0 else None
 
     def randomFill(self):
+        self._grid = copy.deepcopy(self._initialGrid)
         for l in self._squares[0]:
             for d in self._squares[1]:
                 dig = list(self._digits)
@@ -75,7 +76,7 @@ class SudokuGrid():
                     else:
                         self._grid[el1], self._grid[el2] = self._grid[el2], self._grid[el1]
 
-            print(ini, initialNbr)
+            #print(ini, initialNbr)
 
 
             #j = 20

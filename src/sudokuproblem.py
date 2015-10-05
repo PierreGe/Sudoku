@@ -78,6 +78,7 @@ class SudokuHeuristicProblem(SudokuAbstractProblem):
 class SudokuHillClimbingProblem(SudokuAbstractProblem):
     def __init__(self, grid):
         grid.randomFill()
+        self._grid = grid
         SudokuAbstractProblem.__init__(self, grid, grid)
 
     def actions(self, A):
