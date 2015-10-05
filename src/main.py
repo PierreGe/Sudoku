@@ -1,5 +1,5 @@
 
-from sudokuabstractproblem import SudokuSearchProblem, SudokuHeuristicProblem
+from sudokuproblem import SudokuSearchProblem, SudokuHeuristicProblem
 from sudokugrid import SudokuGrid
 from sudokusearch import numered_depth_first_tree_search, LimitReached, numered_best_first_tree_search
 from Aima import search
