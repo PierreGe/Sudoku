@@ -22,6 +22,26 @@ class SudokuGrid():
             if pos not in self._grid:
                 return pos
 
+    def getAllEmpty(self):
+        l = []
+        for pos in SudokuGrid.combination(self._letters, self._digits):
+                    if pos not in self._grid:
+                        l.append(pos)
+        return l
+
+    def getBestEmpty(self):
+        min = 9
+        minpos = None
+        for pos in SudokuGrid.combination(self._letters, self._digits):
+            if pos not in self._grid:
+                val = self.possibleValue(pos)
+                if len(val) == 1:
+                    return pos
+                if len(val) < min:
+                    min = len(val)
+                    minpos = pos
+        return pos
+
     def setOnGrid(self,position,chiffre):
         self._grid[position] = chiffre
 
