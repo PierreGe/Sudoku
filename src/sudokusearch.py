@@ -4,8 +4,8 @@ from Aima import utils
 
 
 class LimitReached(Exception):
-    def __init__(self):
-        pass
+    def __init__(self,message):
+        Exception.__init__(self,message)
 
 def numered_tree_search(problem, frontier, limit):
     """Search through the successors of a problem to find a goal.
@@ -17,7 +17,7 @@ def numered_tree_search(problem, frontier, limit):
         node = frontier.pop()
         counter += 1
         if counter == limit:
-            raise LimitReached
+            raise LimitReached("The limit number of node to be explored has been reached (" + str(limit) + ")")
         if problem.goal_test(node.state):
             return node,counter
         frontier.extend(node.expand(problem))
