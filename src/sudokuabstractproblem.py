@@ -4,7 +4,7 @@ import copy
 
 
 class SudokuAbstractProblem(search.Problem):
-    def __init__(self,initial, grid):
+    def __init__(self, initial, grid):
         search.Problem.__init__(self, initial, None)
         self.grid = grid
 
@@ -14,14 +14,13 @@ class SudokuAbstractProblem(search.Problem):
         l = []
         for possibility in grid.possibleValue(pos):
             g = copy.deepcopy(grid)
-            g.setOnGrid(pos,possibility)
+            g.setOnGrid(pos, possibility)
             l.append([g, g.getFirstEmpty()])
         return l
 
     def result(self, state, action):
         "The result of going to a neighbor is just that neighbor."
         return action
-
 
     def goal_test(self, state):
         """Return True if the state is a goal. The default method compares the
@@ -31,9 +30,10 @@ class SudokuAbstractProblem(search.Problem):
             return state[0].isFinished()
         return False
 
+
 class SudokuSearchProblem(SudokuAbstractProblem):
     def __init__(self, grid):
-        SudokuAbstractProblem.__init__(self, (grid,grid.getFirstEmpty()), grid)
+        SudokuAbstractProblem.__init__(self, (grid, grid.getFirstEmpty()), grid)
 
     def actions(self, A):
         "The actions at a graph node are just its neighbors."
@@ -41,14 +41,14 @@ class SudokuSearchProblem(SudokuAbstractProblem):
         l = []
         for possibility in grid.possibleValue(pos):
             g = copy.deepcopy(grid)
-            g.setOnGrid(pos,possibility)
+            g.setOnGrid(pos, possibility)
             l.append([g, g.getFirstEmpty()])
         return l
 
 
 class SudokuHeuristicProblem(SudokuAbstractProblem):
     def __init__(self, grid):
-        SudokuAbstractProblem.__init__(self, (grid,grid.getBestEmpty()), grid)
+        SudokuAbstractProblem.__init__(self, (grid, grid.getBestEmpty()), grid)
 
     def actions(self, A):
         "The actions at a graph node are just its neighbors."
@@ -56,7 +56,7 @@ class SudokuHeuristicProblem(SudokuAbstractProblem):
         l = []
         for possibility in grid.possibleValue(pos):
             g = copy.deepcopy(grid)
-            g.setOnGrid(pos,possibility)
+            g.setOnGrid(pos, possibility)
             l.append([g, g.getBestEmpty()])
         return l
 
@@ -66,11 +66,12 @@ class SudokuHeuristicProblem(SudokuAbstractProblem):
         is such that the path doesn't matter, this function will only look at
         state2.  If the path does matter, it will consider c and maybe state1
         and action. The default method costs 1 for every step in the path."""
-        if state2[1] != None: # grille pas rempli
+        if state2[1] != None:  # grille pas rempli
             c = 10 - (len(state2[0].possibleValue(state2[1])))
         else:
             c = 0
         return c
+
 
 if __name__ == '__main__':
     # g = SudokuGrid('..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..')
