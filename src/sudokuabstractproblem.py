@@ -54,6 +54,8 @@ class SudokuHeuristicProblem(SudokuAbstractProblem):
         "The actions at a graph node are just its neighbors."
         grid, pos = A
         l = []
+        if pos == None:
+            print(grid)
         for possibility in grid.possibleValue(pos):
             g = copy.deepcopy(grid)
             g.setOnGrid(pos, possibility)
