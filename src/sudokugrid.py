@@ -46,6 +46,7 @@ class SudokuGrid():
         for l in self._squares[0]:
             for d in self._squares[1]:
                 dig = list(self._digits)
+                random.shuffle(dig)
                 for s in SudokuGrid.combination(l,d):
                     if s in self._grid:
                         dig.remove(self._grid[s])
