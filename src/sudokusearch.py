@@ -60,3 +60,15 @@ def numered_best_first_tree_search(problem, limit=10000, f=lambda node: node.pat
                     del frontier[incumbent]
                     frontier.append(child)
     return node, counter
+
+def hill_climbing_global_max(problem, i):
+    node = search.hill_climbing(problem)
+    bestnode = node
+    conflict = node.getConflictNumber()
+    while node.getConflictNumber() > 0 and i>0:
+        problem.__init__(problem._grid)
+        node = search.hill_climbing(problem)
+        if conflict > node.getConflictNumber():
+            bestnode = node
+        i-=1
+    return bestnode
