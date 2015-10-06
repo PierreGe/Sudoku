@@ -75,7 +75,7 @@ class SudokuGrid():
                     else:
                         self._grid[el1], self._grid[el2] = self._grid[el2], self._grid[el1]
 
-            print(ini, initialNbr)
+            #print(ini, initialNbr)
 
 
             #j = 20
