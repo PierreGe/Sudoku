@@ -19,7 +19,7 @@ def main():
         file100 = open("50sudoku.txt", 'r')
         f = file100.readlines()
 
-    print('\n\nCombien d\'essais doivent faire les algos maximum?')
+    print('\n\nCombien d\'essais (=noeuds visites) doivent faire les algos au maximum ?')
     limit = int(raw_input('Nombre d\'essais maximal: '))
 
     writeToFile = raw_input('\n\nEcrire les resultats dans un fichier .csv? (1 pour oui, n\'importe quoi sinon) : ')
@@ -44,7 +44,7 @@ def main():
         print("\n--- Hill climbing ---")
         g = SudokuGrid(seq)
         p = SudokuHillClimbingProblem(g)
-        tentative = 1
+        tentative = 2
         node = hill_climbing_global_max(p,tentative)
         hi = 1 if node.isFinished() else 0
 
