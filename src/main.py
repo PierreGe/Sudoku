@@ -33,11 +33,8 @@ def main():
         #print("Hill climbing")
         g = SudokuGrid(seq)
         p = SudokuHillClimbingProblem(g)
-<<<<<<< HEAD
         tentative = 1
-=======
-        tentative = 0
->>>>>>> 9129719c601df12eb2ba7ee96da987cbe11540d8
+
         node = hill_climbing_global_max(p,tentative)
         hi = 1 if node.isFinished() else 0
 
