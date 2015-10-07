@@ -98,17 +98,21 @@ class SudokuGrid():
     def getBestEmpty(self):
         min = 9
         minpos = None
+        l = []
         for pos in SudokuGrid.combination(self._letters, self._digits):
             if pos not in self._grid:
                 val = self.possibleValue(pos)
-                if len(val) == 1:
-                    return pos
-                if len(val) < min and len(val) > 1:
+                if len(val) < min :
                     min = len(val)
                     minpos = pos
+                    l = [minpos]
+                elif len(val) == min:
+                    l.append(pos)
+                if min == 1:
+                    return l
         if minpos == None: # TODO ne devrait pas faire ca
             minpos = self.getFirstEmpty()
-        return minpos
+        return l
 
     def setOnGrid(self, position, chiffre):
         self._grid[position] = chiffre

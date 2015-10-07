@@ -7,18 +7,18 @@ from Aima import search
 
 
 def main():
-    #seq = '...92..579.7.458212518764935481.297672956413813.798245372689514814253769.95417382'
-    #seq = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
+    f = ['...92..579.7.458212518764935481.297672956413813.798245372689514814253769.95417382']
+    seq = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
     #seq = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..6..82....2..95..8..2.3..9..5.1.3..'
-    seq = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
+    #f = ['003000600900305000001806400008102900700000008006708200002609500800003009005010300']
 
-    limit = 100
+    limit = 1000
 
     file100 = open("100sudoku.txt", 'r')
     resFile = open('result1000.csv', 'w')
     resFile.write('limite de ' + str(limit) + '\n')
 
-    f = file100.readlines()
+    #f = file100.readlines()
     result = ['Avec limite de ' + str(limit)]
     a = 0
 
@@ -32,7 +32,7 @@ def main():
         print("Hill climbing")
         g = SudokuGrid(seq)
         p = SudokuHillClimbingProblem(g)
-        tentative = 20
+        tentative = 0
         node = hill_climbing_global_max(p,tentative)
         print(node)
         hi = node.isFinished()
