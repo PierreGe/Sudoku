@@ -21,7 +21,7 @@
 %\textbf{\textsc{Département d'Informatique}}
 \vfill{}\vfill{}
 \begin{center}{\Huge Rapport : TP1 - Sudoku}\end{center}{\Huge \par}
-\begin{center}{\large Pierre Gérard, Alexandre Savard \\ 0000000-0957329}\end{center}{\Huge \par}
+\begin{center}{\large Pierre Gérard, Alexandre Savard \\ 1121992-0957329}\end{center}{\Huge \par}
 \vfill{}\vfill{} \vfill{}
 \begin{flushleft}{\large \textbf{IFT 3335 Intelligence artificielle: Introduction}}\hfill{\\Jian-Yun Nie, William Lechelle}\end{flushleft}{\large\par}
 \vfill{}\vfill{}\enlargethispage{3cm}
@@ -44,9 +44,9 @@ Nous cherchions à résoudre un sudoku à l'aide de divers algorithmes. Pour for
 
 Lorsque définie de cette façon, il est évident que l'état initial est la grille original contenant seulement les chiffres de départ. Dans notre cas, chaque noeuds correspond à la décision du chiffre à placer dans une case. Les noeuds enfants sont ainsi les grilles que nous aurions selon chaque chiffre possible. Par exemple en observant la première case libre, l'algorithme aurait le choix de mettre les chiffres 1, 5, 6, 8 et 9 dans la case sans créer de conflits. Les 5 noeuds enfants seront donc la grille avec l'un des 5 chiffres précédents. \\
 
-L'état but dans ce cas ci est l'état ou le sudoku est complètement remplit et qu'il ne contient aucune erreur. Nous vérifions que la grille est complète avec la fonction isFinished(). Aussi, nous considérons que le coût d'une étape est égal à 1.\\
+L'état but dans ce cas ci est l'état ou le sudoku est complètement remplit et qu'il ne contient aucune erreur. Nous vérifions que la grille est complète avec la fonction isFinished(). Aussi, nous considérons que le coût d'une étape est égal à 1 pour la recherche simple et dépend de l'heuristique pour le hill climbing et la recherche avec heuristique.\\
 
-Lorsque nous avons imposé une limite sur le nombre de noeuds visités à nos algorithme de recherche, il s'agissait donc d'imposer le nombre d'essais que l'algorithme pouvait faire. Chaque fois que l'algorithme considère une chiffre à mettre dans une case, qu'il soit valide ou pas on parle d'un essai dans ce cas ci. 
+Lorsque nous avons imposé une limite sur le nombre de noeuds visités à nos algorithme de recherche, il s'agissait donc d'imposer le nombre d'essais que l'algorithme pouvait faire.On parle d'un essai chaque fois que l'algorithme considère un chiffre à mettre dans une case, qu'il soit valide ou pas. 
 
 \section{Search}
 
