@@ -49,8 +49,58 @@ L'état but dans ce cas ci est l'état ou le sudoku est complètement remplit et
 Lorsque nous avons imposé une limite sur le nombre de noeuds visités à nos algorithme de recherche, il s'agissait donc d'imposer le nombre d'essais que l'algorithme pouvait faire.On parle d'un essai chaque fois que l'algorithme considère un chiffre à mettre dans une case, qu'il soit valide ou pas. 
 
 \section{Search}
+\subsection{Implémentation}
 
-% Alex
+\subsection{Résultat}
+Lorsque nous donnons une grille à cet algorithme, nous obtenons  d'abord la grille d'entrée pour bien visualiser le problème. Ensuite, si l'algorithme à réussit à remplir la grille avec le nombre d'essais permis, il nous affichera la nouvelle grille remplie. Par contre si la limite de noeuds est atteinte il affichera un message d'erreur. Voici un exemple:
+
+\begin{verbatim}
+   --- INPUT ---
+. . 3 |. . . |6 . . |
+9 . . |3 . 5 |. . . |
+. . 1 |8 . 6 |4 . . |
+---------------------
+. . 8 |1 . 2 |9 . . |
+7 . . |. . . |. . 8 |
+. . 6 |7 . 8 |2 . . |
+---------------------
+. . 2 |6 . 9 |5 . . |
+8 . . |. . 3 |. . 9 |
+. . 5 |. 1 . |3 . . |
+---------------------
+\end{verbatim}
+
+D'abord regardons le résultat si on donne une limite de 500 noeuds à l'algorithme:
+
+\begin{verbatim}
+--- Depth-First Search ---
+ERROR : The limit number of node to be explored has been reached (500)
+\end{verbatim}
+
+Par contre si nous lui donnons une limite de 10000 noeuds, on obtient plutôt:
+
+\begin{verbatim}
+   --- Search ---
+4 8 3 |9 2 1 |6 5 7 |
+9 6 7 |3 4 5 |8 2 1 |
+2 5 1 |8 7 6 |4 9 3 |
+---------------------
+5 4 8 |1 3 2 |9 7 6 |
+7 2 9 |5 6 4 |1 3 8 |
+1 3 6 |7 9 8 |2 4 5 |
+---------------------
+3 7 2 |6 8 9 |5 1 4 |
+8 1 4 |2 5 3 |7 6 9 |
+6 9 5 |4 1 7 |3 8 2 |
+---------------------
+
+Succes : Nombre de noeuds visites : 4999
+\end{verbatim}
+
+Ce qui est une solution optimale et par le fait même la seule solution valable à cette grille.
+
+
+\subsection{Analyse des résultats}
 
 \section{Hill-climbing}
 
