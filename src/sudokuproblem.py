@@ -48,18 +48,18 @@ class SudokuSearchProblem(SudokuAbstractProblem):
 
 class SudokuHeuristicProblem(SudokuAbstractProblem):
     def __init__(self, grid):
-        SudokuAbstractProblem.__init__(self, (grid, grid.getBestEmpty()), grid)
+        SudokuAbstractProblem.__init__(self, (grid, grid.getBestEmpty()[0]), grid)
 
     def actions(self, A):
         "The actions at a graph node are just its neighbors."
         grid, pos = A
         l = []
-        if pos == None:
-            print(grid)
         for possibility in grid.possibleValue(pos):
             g = copy.deepcopy(grid)
             g.setOnGrid(pos, possibility)
-            l.append([g, g.getBestEmpty()])
+            for p in g.getBestEmpty():
+                g2 = copy.deepcopy(g)
+                l.append([g2, p])
         return l
 
     def path_cost(self, c, state1, action, state2):
@@ -68,8 +68,10 @@ class SudokuHeuristicProblem(SudokuAbstractProblem):
         is such that the path doesn't matter, this function will only look at
         state2.  If the path does matter, it will consider c and maybe state1
         and action. The default method costs 1 for every step in the path."""
+        #print(c,state1,action,state2)
         if state2[1] != None:  # grille pas rempli
-            c = 10 - (len(state2[0].possibleValue(state2[1])))
+            for gr in state2[0].getAllEmpty():
+                c = 1000 - (len(state2[0].possibleValue(gr)))
         else:
             c = 0
         return c
