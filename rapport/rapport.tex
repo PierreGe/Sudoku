@@ -91,8 +91,8 @@ Hill climbing
 ECHEC, malgre 20 test de configuration initiale differente
 Ci dessus, un maximum local (4 conflits restant)
 \end{verbatim}
-Comme indiqué, il reste 4 conflits et la solution n'est pas optimal.
-Pour des grilles plus simple l'algorithme trouve la solution comme on peut voir ci-dessous.
+Comme indiqué, il reste 4 conflits et la solution proposé n'est pas une solution valide de sudoku, mais s'en approche.
+Pour des grilles plus simple l'algorithme trouve bien la solution comme on peut voir ci-dessous.
 \begin{verbatim}
 	 --- INPUT ---
 . . . |9 2 . |. 5 7 |
@@ -134,8 +134,7 @@ Il n'est pas surprenant que Hill Climbing, un algorithme de recherche local, ne 
 \end{figure}
 Une fois au maximum local, notre algorithme s'arrête comme il n'a pas de meilleur voisin. Il est incapable de dire si il existe un meilleur sommet.
 
-Une meilleur technique serait le Simulated annealing, non demandé ici.
-
+Une meilleur technique serait le Simulated annealing, non demandé ici. 
 \section{Heuristic search}
 
 \subsection{Implémentation}
@@ -147,6 +146,9 @@ Une meilleur technique serait le Simulated annealing, non demandé ici.
 \section{Comparaison}
 
 % Alex
+
+
+\section{Heuristique bonus}
 
 
 \end{document}
