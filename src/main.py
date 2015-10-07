@@ -15,7 +15,8 @@ def main():
     limit = 100
 
     file100 = open("100sudoku.txt", 'r')
-    resFile = open('result1000.csv', 'w')
+    nomfichier = "result" + str(limit) + '.csv'
+    resFile = open(nomfichier, 'w')
     resFile.write('limite de ' + str(limit) + '\n')
 
     f = file100.readlines()
@@ -25,49 +26,51 @@ def main():
     for seq in f:
         a+=1
 
-        print(" --- INPUT ---")
+        #print(" --- INPUT ---")
         g = SudokuGrid(seq)
-        print(g)
+        #print(g)
 
-        print("Hill climbing")
+        #print("Hill climbing")
         g = SudokuGrid(seq)
         p = SudokuHillClimbingProblem(g)
-        tentative = 20
+        tentative = 1
         node = hill_climbing_global_max(p,tentative)
+        hi = 1 if node.isFinished() else 0
+
+        """
         print(node)
-        hi = node.isFinished()
         if node.isFinished():
             print("Succes !")
         else:
             print("Echec malgre "+str(tentative)+ " test de configuration initiale differente")
             print("Ci dessus, un maximum local (" + str(node.getConflictNumber()) + " conflits restant)")
-
+        """
 
         try:
-            print("Heuristic")
+            #print("Heuristic")
             g = SudokuGrid(seq)
             p = SudokuHeuristicProblem(g)
             node, nbrNode = numered_best_first_tree_search(p, limit)
-            print("\n\n--- OUTPUT ---")
-            print(node.state[0])
-            print("Succes : Nombre de noeuds visites : " + str(nbrNode))
-            he = nbrNode if node.state[0].isFinished() else False
+            #print("\n\n--- OUTPUT ---")
+            #print(node.state[0])
+            #print("Succes : Nombre de noeuds visites : " + str(nbrNode))
+            he = 1 if node.state[0].isFinished() else 0
         except LimitReached as e:
-            print("ERROR : " + str(e))
-            he = False
+            #print("ERROR : " + str(e))
+            he = 0
 
         try:
-            print("Search")
+            #print("Search")
             g = SudokuGrid(seq)
             p = SudokuSearchProblem(g)
             node, nbrNode = numered_depth_first_tree_search(p, limit)
-            print("\n\n--- OUTPUT ---")
-            print(node.state[0])
-            print("Nombre de noeuds visites : " + str(nbrNode))
-            se = nbrNode if node.state[0].isFinished() else False
+            #print("\n\n--- OUTPUT ---")
+            #print(node.state[0])
+            #print("Nombre de noeuds visites : " + str(nbrNode))
+            se = 1 if node.state[0].isFinished() else 0
         except LimitReached as e:
-            print("ERROR : " + str(e))
-            se = False
+            #print("ERROR : " + str(e))
+            se = 0
 
         result.append((hi, he, se))
         print('Sudoku #' + str(a))
