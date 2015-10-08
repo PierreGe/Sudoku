@@ -54,6 +54,14 @@ class SudokuGrid():
                      if s not in self._grid:
                          self._grid[s] = dig.pop()
 
+    def getConflictCaseNumberFilled(self,posTarget):
+        res = 0
+        for pos in self._conflictPositionDict[posTarget]:
+            if pos in self._grid:
+                res+=1
+        return res
+
+
     def switchConflict(self,square):
         indexlist = SudokuGrid.combination(self._squares[0][(square-1)%3],self._squares[1][(square-1)/3])
         conflitList = []

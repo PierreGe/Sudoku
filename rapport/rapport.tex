@@ -193,15 +193,71 @@ Une meilleur technique serait le Simulated annealing, non demandé ici.
 \section{Heuristic search}
 
 \subsection{Implémentation}
+
+Pour réaliser une meilleur recherche une combinaison de 3 heuristique a été utilisé. Ces dernière sont les suivantes :
+\begin{itemize}
+	\item L'algorithme essaye de remplir d'abord les cases avec le moins de possibilités de chiffre différent.
+\end{itemize}
+Pour chacune des cases répondant a la condition ci-dessus, un cout de chemin est calculé qui dépendant des deux heuristique suivante :
+\begin{itemize}
+	\item La somme des possibilités restant dans les autres cases vides après avoir placé un chiffre à une case,
+	\item L'inverse du nombre de case restant dans le carré, la ligne ou la colonne ou on place le chiffre.
+\end{itemize}
+
+Il semble évident que la première des heuristiques est la plus puissante des trois. Leur utilisation exclusive n'a pas beaucoup de sens. Elles ont donc été implémentée les 3 ensembles.
+
 \subsection{Résultat}
+
+Ci-dessous un exemple de différence entre l'algo sans et avec heuristique
+\begin{verbatim}
+--- Heuristic ---
+4 8 3 |9 2 1 |6 5 7 |
+9 6 7 |3 4 5 |8 2 1 |
+2 5 1 |8 7 6 |4 9 3 |
+---------------------
+5 4 8 |1 3 2 |9 7 6 |
+7 2 9 |5 6 4 |1 3 8 |
+1 3 6 |7 9 8 |2 4 5 |
+---------------------
+3 9 2 |6 8 7 |5 1 4 |
+8 1 4 |2 5 3 |7 6 9 |
+6 7 5 |4 1 . |3 8 2 |
+---------------------
+
+Succes : Nombre de noeuds visites : 77
+
+
+
+--- Depth-First Search ---
+4 8 3 |9 2 1 |6 5 7 |
+9 6 7 |3 4 5 |8 2 1 |
+2 5 1 |8 7 6 |4 9 3 |
+---------------------
+5 4 8 |1 3 2 |9 7 6 |
+7 2 9 |5 6 4 |1 3 8 |
+1 3 6 |7 9 8 |2 4 5 |
+---------------------
+3 9 2 |6 8 7 |5 1 4 |
+8 1 4 |2 5 3 |7 6 9 |
+6 7 5 |4 1 9 |3 8 2 |
+---------------------
+
+Succes : Nombre de noeuds visites : 5313
+\end{verbatim}
+On remarque que le l'algorithme avec heuristique finit beaucoup plus rapidement. Le nombre de noeud visité a été diminué de 70 fois passant pour cet exemple de 5313 à 77.
+
 \subsection{Analyse des résultats}
+
+L'amélioration par rapport à une recherche classique sans heuristique est très importante. Le nombre de noeuds visités est de 77 au lieu de 5313 et cela pour un problème ou il n'existe pas toujours au moins une case avec une seule possibilité.
+
+Pour les sudoku facile, tel qu'il existe toujours au moins une case avec une possibilité, le nombre de noeud visité serait égale au nombre de case vide au départ.
 
 % Pierre
 
 \section{Comparaison}
 Il est intéressant de comparer les résultats obtenus par nos trois algorithmes. D'abord le "Hill Climbing" n'à réussit absolument aucun sudoku de la liste de 100 que nous lui avons fournis en entré pour les raisons expliquées plus haut. On voit aussi que l'algorithme de recherche en profondeur d'abord peut prendre beaucoup plus d'essais avant de trouver une solution. En fait, si nous avions mis un nombre illimité d'essais, il aurait probablement performer près de la perfection, mais il aurait mis un temps fou à trouver une solution dans certain cas. Dans le cas le l'heuristique, il est évident qu'il est le meilleur des trois. Il arrive plus souvent à une solution puisqu'il visite beaucoup moins d'états avant d'arriver à une solution. Nous pouvons faire une comparaison visuelle les trois algorithmes dans le graphiques de la figure \ref{fig:comp} \\
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\includegraphics[width=12cm]{images/comparaison.png} 
 	\centering
 	\caption{Comparaison entre le nombre de réussite pour les 3 algorithmes avec 100 sudokus}
@@ -215,12 +271,9 @@ En comparant seulement les deux autres, on voit bien que l'algorithme qui utilis
 
 
 
+% Hill climbing nous garantit qu'il terminera dans une délai raisonnable comparé aux autres
 
 
-
-
-
-\section{Heuristique bonus}
 
 
 \end{document}
