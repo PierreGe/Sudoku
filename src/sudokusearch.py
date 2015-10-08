@@ -71,6 +71,5 @@ def hill_climbing_global_max(problem, i):
         if conflict > node.getConflictNumber():
             bestnode = node
             conflict = node.getConflictNumber()
-            print(node.getConflictNumber())
         i-=1
     return bestnode

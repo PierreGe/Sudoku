@@ -1,7 +1,7 @@
 from Aima import search
 from sudokugrid import SudokuGrid
 import copy
-
+import random
 
 class SudokuAbstractProblem(search.Problem):
     def __init__(self, initial, grid):
@@ -15,7 +15,9 @@ class SudokuAbstractProblem(search.Problem):
         for possibility in grid.possibleValue(pos):
             g = copy.deepcopy(grid)
             g.setOnGrid(pos, possibility)
-            l.append([g, g.getFirstEmpty()])
+            x = g.getAllEmpty()
+            random.shuffle(x)
+            l.append([g, x[0]])
         return l
 
     def result(self, state, action):
@@ -68,10 +70,11 @@ class SudokuHeuristicProblem(SudokuAbstractProblem):
         is such that the path doesn't matter, this function will only look at
         state2.  If the path does matter, it will consider c and maybe state1
         and action. The default method costs 1 for every step in the path."""
-        #print(c,state1,action,state2)
-        if state2[1] != None:  # grille pas rempli
-            for gr in state2[0].getAllEmpty():
-                c = 1000 - (len(state2[0].possibleValue(gr)))
+        c = 1500
+        if action[1] != None:  # grille pas rempli
+            for gr in action[0].getAllEmpty():
+                c -= (len(action[0].possibleValue(gr))) # on retire le nombre de possibilite restante
+            c -= action[0].getConflictCaseNumberFilled(action[1]) * 30
         else:
             c = 0
         return c
