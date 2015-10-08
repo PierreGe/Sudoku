@@ -50,8 +50,14 @@ Lorsque nous avons imposé une limite sur le nombre de noeuds visités à nos al
 
 \section{Search}
 \subsection{Implémentation}
+Cet algorithme a été implanté de façon à ce qu'il remplisse toujours la première case vide dans la grille. L'état initial est donc la grille vide qui doit être remplie et chacun de ses enfants sont les nouvelles grilles créés en mettant un chiffre de 1 à 9 dans la première case vide sans qu'il n'y ait de conflit. Par exemple, dans la première grille de la section \ref{sec:res} nous aurions A1 comme première case vide, et les possibilités de chiffres seraient 2, 4 et 5 puisque les autres chiffres créent des conflits. Les enfants de la première état dans l'arbre sera donc les 3 nouvelles grilles que l'on obtient à mettant un de ces 3 chiffres dans la première case vide. \\
+
+Une fois que la première est remplie, il passe à la seconde case vide. Comme il s'agit d'un algorithme en profondeur d'abord, il va commencer par mettre le chiffre le plus petit qui n'a pas de conflit et passera directement à la prochaine case pour y mettre aussi le plus petit chiffre possible sans conflit. Si il se rend à une configuration impossible, il remonte de une étape et prend le second chiffre le plus élevé et ainsi de suite.\\
+
+L'algorithme va s'arrêter seulement s'il réussit à remplir complètement la grille. Une fonction vérifie si la grille est exacte à la fin pour s'assurer du résultat.
 
 \subsection{Résultat}
+\label{sec:res}
 Lorsque nous donnons une grille à cet algorithme, nous obtenons  d'abord la grille d'entrée pour bien visualiser le problème. Ensuite, si l'algorithme à réussit à remplir la grille avec le nombre d'essais permis, il nous affichera la nouvelle grille remplie. Par contre si la limite de noeuds est atteinte il affichera un message d'erreur. Voici un exemple:
 
 \begin{verbatim}
@@ -101,12 +107,15 @@ Ce qui est une solution optimale et par le fait même la seule solution valable 
 
 
 \subsection{Analyse des résultats}
+Un tel algorithme devrait, en théorie, trouver chaque fois une solution au problème. Par contre, il devra parfois explorer une quantité phénoménale de noeuds avant d'y arriver. En considérant qu'il existe environ 5.5 millions de combinaisons possibles d'une grille de sudoku, il n'est pas surprenant que l'algorithme ne réussissent pas toujours lorsqu'on restreint son nombre d'essais à quelques centaines ou quelques milliers. En fait, il serait théoriquement possible que l'algorithme trouve une solution optimale en très peu d'étapes. Par exemple, avec une grille initiale contenant 27 chiffres de départs, il serait possible de résoudre cette grille en aussi peu que 54 essais, si on considère que l'algorithme trouve à chaque fois le bon chiffre à mettre dans la grille du premier coup. \\
+
+Dans notre cas spécifique, nous avons donné une limite à l'algorithme pour pas qu'il ne travaille trop longtemps et pour voir la performance. En imposant une limite de seulement quelques centaines, les résultats étaient très mauvais. Par contre plus nous accordions une limite élevée, plus l'algorithme réussissait souvent à trouver une solution optimale. Ce qui est exactement ce à quoi nous nous attendions.
 
 \section{Hill-climbing}
 
 % Pierre
 \subsection{Implémentation}
-L'algorithme a été implémentée de manière à ce que la grille initiale soit remplie de manière totalement aléatoire. L'état initiale est donc cette grille initiale. On peut le visualiser comme la racine d'un arbre. Il a 9 enfants. Chaque enfant correspond a la permutation de (case1,case2) dans un des carré de dimension 3x3 telle que cette permutation minimise le nombre de conflit global. la permutation optimale est trouvé en les testant toutes à l'intérieur d'un carré 3x3
+L'algorithme a été implémentée de manière à ce que la grille initiale soit remplie de manière totalement aléatoire. L'état initiale est donc cette grille initiale. On peut le visualiser comme la racine d'un arbre. Il a 9 enfants. Chaque enfant correspond a la permutation de (case1,case2) dans un des carré de dimension 3x3 telle que cette permutation minimise le nombre de conflit global. la permutation optimale est trouvé en les testant toutes à l'intérieur d'un carré 3x3\\
 
 % condition d'arrêt
 
