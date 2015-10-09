@@ -266,7 +266,8 @@ Pour les sudoku facile, tel qu'il existe toujours au moins une case avec une pos
 % Pierre
 
 \section{Comparaison}
-Il est intéressant de comparer les résultats obtenus par nos trois algorithmes. D'abord le "Hill Climbing" n'à réussit absolument aucun sudoku de la liste de 100 que nous lui avons fournis en entré pour les raisons expliquées plus haut. On voit aussi que l'algorithme de recherche en profondeur d'abord peut prendre beaucoup plus d'essais avant de trouver une solution. En fait, si nous avions mis un nombre illimité d'essais, il aurait probablement performer près de la perfection, mais il aurait mis un temps fou à trouver une solution dans certain cas. Dans le cas le l'heuristique, il est évident qu'il est le meilleur des trois. Il arrive plus souvent à une solution puisqu'il visite beaucoup moins d'états avant d'arriver à une solution. Nous pouvons faire une comparaison visuelle les trois algorithmes dans le graphiques de la figure \ref{fig:comp} \\
+Il est intéressant de comparer les résultats obtenus par nos trois algorithmes. D'abord le "Hill Climbing" n'à réussit absolument aucun sudoku de la liste de 100 que nous lui avons fournis en entré pour les raisons expliquées plus haut. On voit aussi que l'algorithme de recherche en profondeur d'abord peut prendre beaucoup plus d'essais avant de trouver une solution. En fait, si nous avions mis un nombre illimité d'essais avec des grille initiale différente, il aurait probablement performer près de la perfection, mais il aurait mis un temps très important à trouver une solution dans certain cas. En effet, il aurait fini par se retrouver dans un maximum local. Nous avons trouvé expérimentalement qu'il lui fallait 3000-4000 essais pour trouver un maximum global. Cependant, le hill climbing a l'avantage de trouver une solution (non-optimal) rapidement peut importe la difficulté de la grille.
+ Dans le cas le l'heuristique, il est évident qu'il est le meilleur des trois. Il arrive plus souvent à une solution puisqu'il visite beaucoup moins d'états avant d'arriver à une solution. Nous pouvons faire une comparaison visuelle les trois algorithmes dans le graphiques de la figure \ref{fig:comp} \\
 
 \begin{figure}[H]
 	\includegraphics[width=12cm]{images/comparaison.png} 
@@ -277,13 +278,7 @@ Il est intéressant de comparer les résultats obtenus par nos trois algorithmes
 
 On voit bien que pour 100 et 500 essais les algorithmes de "Hill Climbing" et de profondeur d'abord n'ont réussit aucun sudoku, par contre celui qui utilise notre heuristique à réussit, même avec très peu d'essais, à en résoudre quelques un. Plus on donne une grande quantité d'essais aux algorithmes plus il réussissent à trouver des solutions. Ceci est à l'exception du "Hill Climbing" qui échoue chaque fois puisqu'il reste pris dans un maximum local.\\
 
-En comparant seulement les deux autres, on voit bien que l'algorithme qui utilise notre heuristique performe en général beaucoup mieux, mais plus on augmente la limite d'essais, plus la recherche en profondeur d'abord semble rattraper l'heuristique. Faute de temps nous n'avons pas pu tester plus de 10000 essais. 
-
-
-
-
-% Hill climbing nous garantit qu'il terminera dans une délai raisonnable comparé aux autres
-
+En comparant seulement les deux autres, on voit bien que l'algorithme qui utilise notre heuristique performe en général beaucoup mieux, mais plus on augmente la limite d'essais, plus la recherche en profondeur d'abord semble rattraper l'heuristique. Faute de puissance de calcul, nous n'avons pas pu tester plus de 10000 essais. 
 
 
 
