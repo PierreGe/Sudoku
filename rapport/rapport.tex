@@ -40,13 +40,15 @@
 
 
 \section{Formulation du problème}
-Nous cherchions à résoudre un sudoku à l'aide de divers algorithmes. Pour formuler ce problème comme un problème de recherche dans l'espace d'états, nous avons d'abord considéré la notion d'état comme étant une combinaison de chiffre à l'intérieur de la grille initiale. En d'autres termes, chaque fois que l'algorithme ajoute un chiffre à l'intérieur de la grille on se trouve dans un nouvel état. \\
+Nous cherchions à résoudre un sudoku à l'aide de trois algorithmes : la recherche, la recherche heuristique, et le hill climbing. 
 
-Lorsque définie de cette façon, il est évident que l'état initial est la grille original contenant seulement les chiffres de départ. Dans notre cas, chaque noeuds correspond à la décision du chiffre à placer dans une case. Les noeuds enfants sont ainsi les grilles que nous aurions selon chaque chiffre possible. Par exemple en observant la première case libre, l'algorithme aurait le choix de mettre les chiffres 1, 5, 6, 8 et 9 dans la case sans créer de conflits. Les 5 noeuds enfants seront donc la grille avec l'un des 5 chiffres précédents. \\
+Pour formuler ce problème comme un problème de recherche dans l'espace d'états, nous avons d'abord considéré la notion d'état comme étant une combinaison de chiffre à l'intérieur de la grille initiale. En d'autres termes, chaque fois que l'algorithme ajoute un chiffre à l'intérieur de la grille on se trouve dans un nouvel état. \\
 
-L'état but dans ce cas ci est l'état ou le sudoku est complètement remplit et qu'il ne contient aucune erreur. Nous vérifions que la grille est complète avec la fonction isFinished(). Aussi, nous considérons que le coût d'une étape est égal à 1 pour la recherche simple et dépend de l'heuristique pour le hill climbing et la recherche avec heuristique.\\
+Lorsque définie de cette façon, il est évident que l'état initial est la grille original contenant seulement les chiffres de départ. Dans notre cas, chaque noeuds correspond à la décision du chiffre à placer dans une case. Les noeuds enfants sont ainsi les grilles que nous aurions selon chaque chiffre possible. Par exemple si en observant la première case libre, l'algorithme avait le choix de mettre les chiffres 1, 5, 6, 8 et 9 dans la case sans créer de conflits, les 5 noeuds enfants serait la grille avec l'un des 5 chiffres précédents. \\
 
-Lorsque nous avons imposé une limite sur le nombre de noeuds visités à nos algorithme de recherche, il s'agissait donc d'imposer le nombre d'essais que l'algorithme pouvait faire.On parle d'un essai chaque fois que l'algorithme considère un chiffre à mettre dans une case, qu'il soit valide ou pas. 
+L'état but dans ce cas ci est l'état ou le sudoku est complètement remplit et qu'il ne contient aucune erreur. Nous vérifions que la grille est complète avec la fonction \verb|isFinished()|. Aussi, nous considérons que le coût d'une étape est égal à 1 pour la recherche simple et dépend de l'heuristique pour le hill climbing et la recherche avec heuristique.\\
+
+Lorsque nous avons imposé une limite sur le nombre de noeuds visités à nos algorithme de recherche, il s'agissait donc d'imposer le nombre d'essais que l'algorithme pouvait faire. On parle d'un essai chaque fois que l'algorithme considère un chiffre à mettre dans une case, qu'il soit valide ou pas. 
 
 \section{Search}
 \subsection{Implémentation}
