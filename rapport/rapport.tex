@@ -266,7 +266,7 @@ L'amélioration par rapport à une recherche classique sans heuristique est trè
 
 Pour les sudoku faciles, tel qu'il existe toujours au moins une case avec une possibilité, le nombre de noeuds visités serait égale au nombre de cases vides au départ.
 
-% Pierre
+Cependant, comme l'heuristique fait des calculs pour trouver le meilleur noeud, le temps passé par noeud est plus important que la recherche simple.
 
 \section{Comparaison}
 Il est intéressant de comparer les résultats obtenus par nos trois algorithmes. D'abord le "Hill Climbing" n'à réussit absolument aucun sudoku de la liste de 100 que nous lui avons fournis en entré pour les raisons expliquées plus haut. On voit aussi que l'algorithme de recherche en profondeur d'abord peut prendre beaucoup plus d'essais avant de trouver une solution. En fait, si nous avions mis un nombre illimité d'essais avec des grille initiale différente, il aurait probablement performer près de la perfection, mais il aurait mis un temps très important à trouver une solution dans certain cas. En effet, il aurait fini par se retrouver dans un maximum local. Nous avons trouvé expérimentalement qu'il lui fallait 3000-4000 essais pour trouver un maximum global. Cependant, le hill climbing a l'avantage de trouver une solution (non-optimal) rapidement peu importe la difficulté de la grille.
